@@ -235,7 +235,7 @@
     </div>
 
     <!-- Footer -->
-    <footer class="bg-dark text-white py-5 mt-5">
+    <footer class="bg-dark text-white py-2 mt-5">
         <div class="container">
             <div class="row">
                 <div class="col-md-4 text-center text-md-start">
@@ -256,9 +256,9 @@
                     <h6 class="mb-3">Desarrollado por</h6>
                     <p class="text-muted mb-2">SanabriaCod</p>
                     <div class="social-links">
-                        <a href="#" class="text-white me-3"><i class="fab fa-github"></i></a>
-                        <a href="#" class="text-white me-3"><i class="fab fa-linkedin"></i></a>
-                        <a href="#" class="text-white"><i class="fab fa-twitter"></i></a>
+                        <a href="https://github.com/javier171717" class="text-white me-3"><i class="fab fa-github"></i></a>
+                        <a href="https://www.linkedin.com/in/javier-jimenez-a184a816b" class="text-white me-3"><i class="fab fa-linkedin"></i></a>
+                        <a href="https://wa.me/573215821483?text=Hola,%20me%20interesa%20tu%20biblioteca%20virtual" class="text-white"><i class="fab fa-whatsapp"></i></a>
                     </div>
                 </div>
             </div>

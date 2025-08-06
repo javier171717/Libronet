@@ -194,17 +194,31 @@
                             </div>
                         <?php endif; ?>
                         
-                        <form action="<?php echo base_url('auth/guardar_registro'); ?>" method="post">
+                        <form action="<?php echo base_url('auth/guardar_registro'); ?>" method="post" id="registro-form">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre completo" required>
+                                        <input type="text" 
+                                               class="form-control" 
+                                               id="nombre" 
+                                               name="nombre" 
+                                               placeholder="Nombre completo" 
+                                               maxlength="50"
+                                               pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+"
+                                               title="Solo se permiten letras y espacios. Ingresa tu nombre completo."
+                                               required>
                                         <label for="nombre">Nombre completo</label>
+                                        <div class="form-text">Máximo 50 caracteres. Solo letras y espacios.</div>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-floating">
-                                        <input type="email" class="form-control" id="email" name="email" placeholder="Correo electrónico" required>
+                                        <input type="email" 
+                                               class="form-control" 
+                                               id="email" 
+                                               name="email" 
+                                               placeholder="Correo electrónico" 
+                                               required>
                                         <label for="email">Correo electrónico</label>
                                     </div>
                                 </div>
@@ -212,14 +226,29 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-floating">
-                                        <input type="password" class="form-control" id="password" name="password" placeholder="Contraseña" required>
+                                        <input type="password" 
+                                               class="form-control" 
+                                               id="password" 
+                                               name="password" 
+                                               placeholder="Contraseña" 
+                                               minlength="8"
+                                               pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$"
+                                               title="Mínimo 8 caracteres, debe contener al menos una mayúscula, una minúscula y un número"
+                                               required>
                                         <label for="password">Contraseña</label>
+                                        <div class="form-text">Mínimo 8 caracteres, una mayúscula, una minúscula y un número.</div>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-floating">
-                                        <input type="password" class="form-control" id="confirm_password" name="confirm_password" placeholder="Confirmar contraseña" required>
+                                        <input type="password" 
+                                               class="form-control" 
+                                               id="confirm_password" 
+                                               name="confirm_password" 
+                                               placeholder="Confirmar contraseña" 
+                                               required>
                                         <label for="confirm_password">Confirmar contraseña</label>
+                                        <div class="form-text">Debe coincidir con la contraseña anterior.</div>
                                     </div>
                                 </div>
                             </div>
@@ -239,17 +268,31 @@
                             </div>
                         <?php endif; ?>
                         
-                        <form action="<?php echo base_url('auth/iniciar_sesion'); ?>" method="post">
+                        <!-- Área para mostrar mensajes de validación en tiempo real -->
+                        <div id="login-message" style="display: none;">
+                        </div>
+                        
+                        <form action="<?php echo base_url('auth/iniciar_sesion'); ?>" method="post" id="login-form">
                             <div class="form-floating">
-                                <input type="email" class="form-control" id="login_email" name="email" placeholder="Correo electrónico" required>
+                                <input type="email" 
+                                       class="form-control" 
+                                       id="login_email" 
+                                       name="email" 
+                                       placeholder="Correo electrónico" 
+                                       required>
                                 <label for="login_email">Correo electrónico</label>
                             </div>
                             <div class="form-floating">
-                                <input type="password" class="form-control" id="login_password" name="password" placeholder="Contraseña" required>
+                                <input type="password" 
+                                       class="form-control" 
+                                       id="login_password" 
+                                       name="password" 
+                                       placeholder="Contraseña" 
+                                       required>
                                 <label for="login_password">Contraseña</label>
                             </div>
                             <div class="text-center">
-                                <button type="submit" class="btn btn-primary btn-lg">
+                                <button type="submit" class="btn btn-primary btn-lg" id="login-btn">
                                     <i class="fas fa-sign-in-alt me-2"></i>Iniciar Sesión
                                 </button>
                             </div>
@@ -323,6 +366,184 @@
                 this.setCustomValidity('Las contraseñas no coinciden');
             } else {
                 this.setCustomValidity('');
+            }
+        });
+        
+        // Validación del nombre en tiempo real
+        document.getElementById('nombre').addEventListener('input', function() {
+            const nombre = this.value.trim();
+            
+            // Validar longitud
+            if (nombre.length > 50) {
+                this.setCustomValidity('El nombre no puede superar los 50 caracteres');
+                return;
+            }
+            
+            // Validar que solo contenga letras y espacios
+            if (!/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]*$/.test(nombre)) {
+                this.setCustomValidity('Solo se permiten letras y espacios');
+                return;
+            }
+            
+            // Validar que tenga al menos 2 palabras
+            const palabras = nombre.split(' ').filter(p => p.length > 0);
+            if (nombre.length > 0 && palabras.length < 2) {
+                this.setCustomValidity('Ingresa tu nombre completo (nombre y apellido)');
+                return;
+            }
+            
+            this.setCustomValidity('');
+        });
+        
+        // Validación de contraseña en tiempo real
+        document.getElementById('password').addEventListener('input', function() {
+            const password = this.value;
+            
+            if (password.length < 8) {
+                this.setCustomValidity('La contraseña debe tener al menos 8 caracteres');
+                return;
+            }
+            
+            if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/.test(password)) {
+                this.setCustomValidity('Debe contener al menos una mayúscula, una minúscula y un número');
+                return;
+            }
+            
+            this.setCustomValidity('');
+            
+            // Revalidar confirmación de contraseña
+            const confirmPassword = document.getElementById('confirm_password');
+            if (confirmPassword.value && confirmPassword.value !== password) {
+                confirmPassword.setCustomValidity('Las contraseñas no coinciden');
+            } else if (confirmPassword.value === password) {
+                confirmPassword.setCustomValidity('');
+            }
+        });
+        
+        // Validación del formulario antes de enviar
+        document.getElementById('registro-form').addEventListener('submit', function(e) {
+            const nombre = document.getElementById('nombre').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirm_password').value;
+            
+            // Validaciones finales
+            if (nombre.length === 0) {
+                alert('El nombre es obligatorio');
+                e.preventDefault();
+                return;
+            }
+            
+            if (nombre.length > 50) {
+                alert('El nombre no puede superar los 50 caracteres');
+                e.preventDefault();
+                return;
+            }
+            
+            const palabras = nombre.split(' ').filter(p => p.length > 0);
+            if (palabras.length < 2) {
+                alert('Ingresa tu nombre completo (nombre y apellido)');
+                e.preventDefault();
+                return;
+            }
+            
+            if (password !== confirmPassword) {
+                alert('Las contraseñas no coinciden');
+                e.preventDefault();
+                return;
+            }
+            
+            if (password.length < 8) {
+                alert('La contraseña debe tener al menos 8 caracteres');
+                e.preventDefault();
+                return;
+            }
+            
+            if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/.test(password)) {
+                alert('La contraseña debe contener al menos una mayúscula, una minúscula y un número');
+                e.preventDefault();
+                return;
+            }
+        });
+        
+        // Validación de login en tiempo real
+        let loginTimeout;
+        
+        function validateLogin() {
+            const email = document.getElementById('login_email').value.trim();
+            const password = document.getElementById('login_password').value;
+            const messageDiv = document.getElementById('login-message');
+            const loginBtn = document.getElementById('login-btn');
+            
+            // Limpiar timeout anterior
+            clearTimeout(loginTimeout);
+            
+            // Si ambos campos están vacíos, ocultar mensaje
+            if (!email && !password) {
+                messageDiv.style.display = 'none';
+                return;
+            }
+            
+            // Validar después de 1 segundo de pausa en escritura
+            loginTimeout = setTimeout(function() {
+                // Si ambos campos tienen contenido, validar
+                if (email && password) {
+                    // Mostrar loading
+                    showLoginMessage('Validando credenciales...', 'info');
+                    
+                    // Hacer petición AJAX
+                    fetch('<?php echo base_url('auth/validar_credenciales'); ?>', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                            'X-Requested-With': 'XMLHttpRequest'
+                        },
+                        body: 'email=' + encodeURIComponent(email) + '&password=' + encodeURIComponent(password)
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.valid) {
+                            showLoginMessage(data.message, 'success');
+                            loginBtn.disabled = false;
+                        } else {
+                            showLoginMessage(data.message, 'danger');
+                            loginBtn.disabled = true;
+                        }
+                    })
+                    .catch(error => {
+                        showLoginMessage('Error al validar credenciales', 'danger');
+                        loginBtn.disabled = true;
+                    });
+                } else {
+                    // Si falta algún campo
+                    if (email && !password) {
+                        showLoginMessage('Ingresa tu contraseña', 'warning');
+                        loginBtn.disabled = true;
+                    } else if (!email && password) {
+                        showLoginMessage('Ingresa tu correo electrónico', 'warning');
+                        loginBtn.disabled = true;
+                    }
+                }
+            }, 1000);
+        }
+        
+        function showLoginMessage(message, type) {
+            const messageDiv = document.getElementById('login-message');
+            messageDiv.className = 'alert alert-' + type;
+            messageDiv.textContent = message;
+            messageDiv.style.display = 'block';
+        }
+        
+        // Agregar eventos a los campos de login
+        document.getElementById('login_email').addEventListener('input', validateLogin);
+        document.getElementById('login_password').addEventListener('input', validateLogin);
+        
+        // Prevenir envío del formulario si las credenciales no son válidas
+        document.getElementById('login-form').addEventListener('submit', function(e) {
+            const loginBtn = document.getElementById('login-btn');
+            if (loginBtn.disabled) {
+                e.preventDefault();
+                showLoginMessage('Corrige los errores antes de continuar', 'danger');
             }
         });
     </script>
