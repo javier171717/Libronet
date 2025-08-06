@@ -134,6 +134,33 @@
         .alert {
             border-radius: 10px;
             border: none;
+            position: relative;
+            padding-right: 50px;
+        }
+        
+        .alert .btn-close {
+            position: absolute;
+            top: 50%;
+            right: 15px;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            opacity: 0.6;
+            transition: opacity 0.3s;
+        }
+        
+        .alert .btn-close:hover {
+            opacity: 1;
+        }
+        
+        .alert-success .btn-close {
+            color: #0f5132;
+        }
+        
+        .alert-danger .btn-close {
+            color: #721c24;
         }
         
         .form-floating {
@@ -183,14 +210,16 @@
                     <!-- Tab de Registro -->
                     <div id="registro-tab">
                         <?php if($this->session->flashdata('error_registro')): ?>
-                            <div class="alert alert-danger">
+                            <div class="alert alert-danger" id="error-alert">
+                                <button type="button" class="btn-close" onclick="this.parentElement.style.display='none'"></button>
                                 <?php echo $this->session->flashdata('error_registro'); ?>
                             </div>
                         <?php endif; ?>
                         
                         <?php if($this->session->flashdata('mensaje')): ?>
-                            <div class="alert alert-success">
-                                <?php echo $this->session->flashdata('mensaje'); ?>
+                            <div class="alert alert-success" id="success-alert">
+                                <button type="button" class="btn-close" onclick="this.parentElement.style.display='none'"></button>
+                                <i class="fas fa-check-circle me-2"></i><?php echo $this->session->flashdata('mensaje'); ?>
                             </div>
                         <?php endif; ?>
                         
@@ -463,6 +492,42 @@
                 alert('La contraseña debe contener al menos una mayúscula, una minúscula y un número');
                 e.preventDefault();
                 return;
+            }
+        });
+        
+        // Manejo automático de mensajes de éxito y error
+        document.addEventListener('DOMContentLoaded', function() {
+            const successAlert = document.getElementById('success-alert');
+            const errorAlert = document.getElementById('error-alert');
+            
+            // Si hay mensaje de éxito (registro exitoso)
+            if (successAlert) {
+                // Después de 3 segundos, ocultar el mensaje y cambiar al tab de login
+                setTimeout(function() {
+                    successAlert.style.transition = 'opacity 0.5s';
+                    successAlert.style.opacity = '0';
+                    
+                    setTimeout(function() {
+                        successAlert.style.display = 'none';
+                        // Cambiar automáticamente al tab de login
+                        showTab('login');
+                    }, 500);
+                }, 3000);
+            }
+            
+            // Si hay mensaje de error, permitir cerrarlo manualmente
+            if (errorAlert) {
+                // Desaparecer automáticamente después de 5 segundos
+                setTimeout(function() {
+                    if (errorAlert.style.display !== 'none') {
+                        errorAlert.style.transition = 'opacity 0.5s';
+                        errorAlert.style.opacity = '0';
+                        
+                        setTimeout(function() {
+                            errorAlert.style.display = 'none';
+                        }, 500);
+                    }
+                }, 5000);
             }
         });
         
