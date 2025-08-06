@@ -481,6 +481,7 @@
             // Si ambos campos están vacíos, ocultar mensaje
             if (!email && !password) {
                 messageDiv.style.display = 'none';
+                loginBtn.disabled = false; // Permitir intento de login
                 return;
             }
             
@@ -491,8 +492,11 @@
                     // Mostrar loading
                     showLoginMessage('Validando credenciales...', 'info');
                     
+                    // Obtener la URL base dinámicamente
+                    const baseUrl = window.location.protocol + '//' + window.location.host + '/Libronet/';
+                    
                     // Hacer petición AJAX
-                    fetch('<?php echo base_url('auth/validar_credenciales'); ?>', {
+                    fetch(baseUrl + 'auth/validar_credenciales', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/x-www-form-urlencoded',
@@ -500,28 +504,35 @@
                         },
                         body: 'email=' + encodeURIComponent(email) + '&password=' + encodeURIComponent(password)
                     })
-                    .then(response => response.json())
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
                     .then(data => {
                         if (data.valid) {
                             showLoginMessage(data.message, 'success');
                             loginBtn.disabled = false;
                         } else {
                             showLoginMessage(data.message, 'danger');
-                            loginBtn.disabled = true;
+                            loginBtn.disabled = false; // Permitir intento aunque falle validación
                         }
                     })
                     .catch(error => {
-                        showLoginMessage('Error al validar credenciales', 'danger');
-                        loginBtn.disabled = true;
+                        console.log('Error en validación:', error);
+                        // En caso de error, permitir el intento de login
+                        messageDiv.style.display = 'none';
+                        loginBtn.disabled = false;
                     });
                 } else {
                     // Si falta algún campo
                     if (email && !password) {
                         showLoginMessage('Ingresa tu contraseña', 'warning');
-                        loginBtn.disabled = true;
+                        loginBtn.disabled = false; // Permitir intento
                     } else if (!email && password) {
                         showLoginMessage('Ingresa tu correo electrónico', 'warning');
-                        loginBtn.disabled = true;
+                        loginBtn.disabled = false; // Permitir intento
                     }
                 }
             }, 1000);
@@ -540,11 +551,25 @@
         
         // Prevenir envío del formulario si las credenciales no son válidas
         document.getElementById('login-form').addEventListener('submit', function(e) {
-            const loginBtn = document.getElementById('login-btn');
-            if (loginBtn.disabled) {
+            const email = document.getElementById('login_email').value.trim();
+            const password = document.getElementById('login_password').value.trim();
+            
+            // Validaciones básicas antes de enviar
+            if (!email || !password) {
                 e.preventDefault();
-                showLoginMessage('Corrige los errores antes de continuar', 'danger');
+                showLoginMessage('Por favor completa ambos campos', 'danger');
+                return false;
             }
+            
+            // Validación básica de formato de email
+            if (!/\S+@\S+\.\S+/.test(email)) {
+                e.preventDefault();
+                showLoginMessage('Formato de email inválido', 'danger');
+                return false;
+            }
+            
+            // Si pasa las validaciones básicas, permitir el envío
+            return true;
         });
     </script>
 </body>
