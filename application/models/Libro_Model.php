@@ -112,4 +112,50 @@ class Libro_Model extends CI_Model {
                          ->row();
         return $libro ? $libro->usuario_id : null;
     }
+
+    // Contar libros agregados este mes
+    public function contar_libros_este_mes() {
+        $this->db->where('MONTH(fecha_agregado)', date('m'));
+        $this->db->where('YEAR(fecha_agregado)', date('Y'));
+        return $this->db->count_all_results($this->table);
+    }
+
+    // Contar libros por usuario
+    public function contar_libros_por_usuario($usuario_id) {
+        return $this->db->where('usuario_id', $usuario_id)->count_all_results($this->table);
+    }
+
+    // Obtener libros por género
+    public function obtener_libros_por_genero() {
+        $this->db->select('genero, COUNT(*) as total');
+        $this->db->group_by('genero');
+        $this->db->order_by('total', 'DESC');
+        return $this->db->get($this->table)->result();
+    }
+
+    // Obtener libros más recientes
+    public function obtener_libros_recientes($limite = 5) {
+        $this->db->order_by('fecha_agregado', 'DESC');
+        $this->db->limit($limite);
+        return $this->db->get($this->table)->result();
+    }
+
+    // Obtener actividad reciente
+    public function obtener_actividad_reciente($limite = 10) {
+        $this->db->select('l.*, u.nombre as nombre_usuario');
+        $this->db->from($this->table . ' l');
+        $this->db->join('usuarios u', 'u.id = l.usuario_id');
+        $this->db->order_by('l.fecha_agregado', 'DESC');
+        $this->db->limit($limite);
+        return $this->db->get()->result();
+    }
+
+    // Obtener libros por mes (últimos 6 meses)
+    public function obtener_libros_por_mes() {
+        $this->db->select('DATE_FORMAT(fecha_agregado, "%Y-%m") as mes, COUNT(*) as total');
+        $this->db->where('fecha_agregado >= DATE_SUB(NOW(), INTERVAL 6 MONTH)');
+        $this->db->group_by('mes');
+        $this->db->order_by('mes', 'ASC');
+        return $this->db->get($this->table)->result();
+    }
 } 

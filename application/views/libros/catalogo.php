@@ -109,6 +109,10 @@
                     </button>
                 </form>
                 
+                <a href="<?= base_url('dashboard') ?>" class="btn btn-outline-info me-2">
+                    <i class="fas fa-chart-line me-1"></i>Dashboard
+                </a>
+                
                 <div class="dropdown">
                     <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown">
                         <i class="fas fa-user me-1"></i><?= $usuario->nombre ?>

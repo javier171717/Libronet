@@ -69,5 +69,10 @@ $route['libros/actualizar/(:num)'] = 'libros/actualizar/$1';
 $route['libros/eliminar/(:num)'] = 'libros/eliminar/$1';
 $route['libros/buscar'] = 'libros/buscar';
 $route['libros/genero/(:any)'] = 'libros/genero/$1';
+$route['libros/leer/(:num)'] = 'libros/leer/$1';
+
+// Rutas del dashboard
+$route['dashboard'] = 'dashboard/index';
+$route['dashboard/chart-data'] = 'dashboard/get_chart_data';
 
 
