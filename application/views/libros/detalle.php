@@ -123,6 +123,16 @@
                                 <?php endif; ?>
                             </div>
                             <div class="btn-group-vertical w-100" role="group">
+                                <?php $esFavorito = isset($mis_favoritos_ids) ? in_array($libro->id, $mis_favoritos_ids) : false; ?>
+                                <?php if($esFavorito): ?>
+                                    <a href="<?= base_url('favoritos/eliminar/' . $libro->id) ?>" class="btn btn-outline-danger mb-2">
+                                        <i class="fas fa-star me-1"></i>Quitar de Favoritos
+                                    </a>
+                                <?php else: ?>
+                                    <a href="<?= base_url('favoritos/agregar/' . $libro->id) ?>" class="btn btn-outline-success mb-2">
+                                        <i class="fas fa-star me-1"></i>Agregar a Favoritos
+                                    </a>
+                                <?php endif; ?>
                                 <?php if($libro->usuario_id == $usuario->id): ?>
                                     <a href="<?= base_url('libros/editar/' . $libro->id) ?>" class="btn btn-outline-warning mb-2">
                                         <i class="fas fa-edit me-1"></i>Editar
@@ -208,6 +218,9 @@
                                 <i class="fas fa-edit me-1"></i>Editar Libro
                             </a>
                         <?php endif; ?>
+                        <a href="<?= base_url('favoritos') ?>" class="btn btn-outline-warning me-2">
+                            <i class="fas fa-star me-1"></i>Mis Favoritos
+                        </a>
                         <a href="<?= base_url('libros/agregar') ?>" class="btn btn-success">
                             <i class="fas fa-plus me-1"></i>Agregar Otro Libro
                         </a>

@@ -75,4 +75,9 @@ $route['libros/leer/(:num)'] = 'libros/leer/$1';
 $route['dashboard'] = 'dashboard/index';
 $route['dashboard/chart-data'] = 'dashboard/get_chart_data';
 
+// Favoritos
+$route['favoritos'] = 'favoritos/index';
+$route['favoritos/agregar/(:num)'] = 'favoritos/agregar/$1';
+$route['favoritos/eliminar/(:num)'] = 'favoritos/eliminar/$1';
+
 

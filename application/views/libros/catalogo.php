@@ -112,6 +112,9 @@
                 <a href="<?= base_url('dashboard') ?>" class="btn btn-outline-info me-2">
                     <i class="fas fa-chart-line me-1"></i>Dashboard
                 </a>
+                <a href="<?= base_url('favoritos') ?>" class="btn btn-outline-warning me-2">
+                    <i class="fas fa-star me-1"></i>Mis Favoritos
+                </a>
                 
                 <div class="dropdown">
                     <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown">
@@ -217,6 +220,22 @@
                                 <?php endif; ?>
                                 
                                 <div class="mt-auto">
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <span class="text-muted small">
+                                            <i class="fas fa-star text-warning"></i>
+                                            <?= isset($favoritos_count[$libro->id]) ? $favoritos_count[$libro->id] : 0 ?> favoritos
+                                        </span>
+                                        <?php $esFavorito = in_array($libro->id, $mis_favoritos_ids ?? []); ?>
+                                        <?php if($esFavorito): ?>
+                                            <a href="<?= base_url('favoritos/eliminar/' . $libro->id) ?>" class="btn btn-sm btn-outline-danger">
+                                                <i class="fas fa-star"></i> Quitar
+                                            </a>
+                                        <?php else: ?>
+                                            <a href="<?= base_url('favoritos/agregar/' . $libro->id) ?>" class="btn btn-sm btn-outline-success">
+                                                <i class="fas fa-star"></i> Favorito
+                                            </a>
+                                        <?php endif; ?>
+                                    </div>
                                     <div class="btn-group w-100" role="group">
                                         <a href="<?= base_url('libros/ver/' . $libro->id) ?>" class="btn btn-outline-primary btn-sm">
                                             <i class="fas fa-eye"></i>

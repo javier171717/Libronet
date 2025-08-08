@@ -5,7 +5,7 @@ class Libros extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
-        $this->load->model(['Libro_Model', 'Usuario_Model']);
+        $this->load->model(['Libro_Model', 'Usuario_Model', 'Favorito_Model']);
         $this->load->helper(['url', 'form']);
         $this->load->library(['session', 'form_validation']);
         
@@ -20,6 +20,11 @@ class Libros extends CI_Controller {
         $data['libros'] = $this->Libro_Model->obtener_libros();
         $data['total_libros'] = $this->Libro_Model->contar_libros();
         $data['usuario'] = $this->session->userdata('usuario');
+
+        // Contadores e IDs de favoritos
+        $libroIds = array_map(function($l){ return $l->id; }, $data['libros']);
+        $data['favoritos_count'] = $this->Favorito_Model->contar_para_libros($libroIds);
+        $data['mis_favoritos_ids'] = $this->Favorito_Model->obtener_ids_libros_favoritos($data['usuario']->id);
         
         $this->load->view('libros/catalogo', $data);
     }
@@ -82,6 +87,9 @@ class Libros extends CI_Controller {
         if (!$data['libro']) {
             show_404();
         }
+        
+        // Datos de favoritos para el usuario actual
+        $data['mis_favoritos_ids'] = $this->Favorito_Model->obtener_ids_libros_favoritos($data['usuario']->id);
         
         $this->load->view('libros/detalle', $data);
     }
