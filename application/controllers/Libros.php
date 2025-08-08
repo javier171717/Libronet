@@ -95,11 +95,24 @@ class Libros extends CI_Controller {
             show_404();
         }
         
+        // Verificar si el usuario es el propietario del libro
+        if (!$this->Libro_Model->es_propietario($id, $data['usuario']->id)) {
+            $this->session->set_flashdata('error', 'No tienes permiso para editar este libro');
+            redirect('libros');
+        }
+        
         $this->load->view('libros/editar', $data);
     }
 
     // Procesar editar libro
     public function actualizar($id) {
+        // Verificar si el usuario es el propietario del libro
+        if (!$this->Libro_Model->es_propietario($id, $this->session->userdata('usuario')->id)) {
+            $this->session->set_flashdata('error', 'No tienes permiso para editar este libro');
+            redirect('libros');
+            return;
+        }
+
         $this->form_validation->set_rules('titulo', 'Título', 'required|trim');
         $this->form_validation->set_rules('autor', 'Autor', 'required|trim');
         $this->form_validation->set_rules('genero', 'Género', 'required|trim');
@@ -145,6 +158,13 @@ class Libros extends CI_Controller {
 
     // Eliminar libro
     public function eliminar($id) {
+        // Verificar si el usuario es el propietario del libro
+        if (!$this->Libro_Model->es_propietario($id, $this->session->userdata('usuario')->id)) {
+            $this->session->set_flashdata('error', 'No tienes permiso para eliminar este libro');
+            redirect('libros');
+            return;
+        }
+
         // Obtener información del libro antes de eliminarlo
         $libro = $this->Libro_Model->obtener_libro($id);
         

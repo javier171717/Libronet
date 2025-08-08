@@ -120,13 +120,15 @@
                                 <?php endif; ?>
                             </div>
                             <div class="btn-group-vertical w-100" role="group">
-                                <a href="<?= base_url('libros/editar/' . $libro->id) ?>" class="btn btn-outline-warning mb-2">
-                                    <i class="fas fa-edit me-1"></i>Editar
-                                </a>
-                                <a href="<?= base_url('libros/eliminar/' . $libro->id) ?>" class="btn btn-outline-danger" 
-                                   onclick="return confirm('¿Estás seguro de que quieres eliminar este libro?')">
-                                    <i class="fas fa-trash me-1"></i>Eliminar
-                                </a>
+                                <?php if($libro->usuario_id == $usuario->id): ?>
+                                    <a href="<?= base_url('libros/editar/' . $libro->id) ?>" class="btn btn-outline-warning mb-2">
+                                        <i class="fas fa-edit me-1"></i>Editar
+                                    </a>
+                                    <a href="<?= base_url('libros/eliminar/' . $libro->id) ?>" class="btn btn-outline-danger" 
+                                       onclick="return confirm('¿Estás seguro de que quieres eliminar este libro?')">
+                                        <i class="fas fa-trash me-1"></i>Eliminar
+                                    </a>
+                                <?php endif; ?>
                             </div>
                         </div>
 
@@ -198,9 +200,11 @@
                             </a>
                         <?php endif; ?>
                         
-                        <a href="<?= base_url('libros/editar/' . $libro->id) ?>" class="btn btn-custom me-2">
-                            <i class="fas fa-edit me-1"></i>Editar Libro
-                        </a>
+                        <?php if($libro->usuario_id == $usuario->id): ?>
+                            <a href="<?= base_url('libros/editar/' . $libro->id) ?>" class="btn btn-custom me-2">
+                                <i class="fas fa-edit me-1"></i>Editar Libro
+                            </a>
+                        <?php endif; ?>
                         <a href="<?= base_url('libros/agregar') ?>" class="btn btn-success">
                             <i class="fas fa-plus me-1"></i>Agregar Otro Libro
                         </a>

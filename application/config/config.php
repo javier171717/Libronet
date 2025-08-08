@@ -23,7 +23,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = 'http://' . $_SERVER['HTTP_HOST'] . '/Libronet/';
+$host = isset($_SERVER['HTTP_X_FORWARDED_HOST']) ? $_SERVER['HTTP_X_FORWARDED_HOST'] : $_SERVER['HTTP_HOST'];
+$protocol = isset($_SERVER['HTTPS']) || isset($_SERVER['HTTP_X_FORWARDED_PROTO']) ? 'https://' : 'http://';
+$config['base_url'] = $protocol . $host . '/Libronet/';
 
 /*
 |--------------------------------------------------------------------------

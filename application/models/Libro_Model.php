@@ -25,6 +25,12 @@ class Libro_Model extends CI_Model {
         if (!isset($data['fecha_agregado']) || empty($data['fecha_agregado'])) {
             $data['fecha_agregado'] = date('Y-m-d H:i:s');
         }
+        
+        // Asegurar que tenga usuario_id
+        if (!isset($data['usuario_id'])) {
+            $data['usuario_id'] = $this->session->userdata('usuario')->id;
+        }
+        
         return $this->db->insert($this->table, $data);
     }
 
@@ -86,5 +92,24 @@ class Libro_Model extends CI_Model {
             return unlink($ruta_archivo);
         }
         return FALSE;
+    }
+
+    // Verificar si un usuario es propietario del libro
+    public function es_propietario($libro_id, $usuario_id) {
+        $libro = $this->db->get_where($this->table, [
+            'id' => $libro_id,
+            'usuario_id' => $usuario_id
+        ])->row();
+        
+        return $libro !== null;
+    }
+
+    // Obtener el usuario_id del propietario del libro
+    public function obtener_propietario($libro_id) {
+        $libro = $this->db->select('usuario_id')
+                         ->where('id', $libro_id)
+                         ->get($this->table)
+                         ->row();
+        return $libro ? $libro->usuario_id : null;
     }
 } 
