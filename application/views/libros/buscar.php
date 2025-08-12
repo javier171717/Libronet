@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Búsqueda - LibroNet</title>
+    <title>Búsqueda - SanabriaCod</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
@@ -11,6 +11,35 @@
             font-weight: bold;
             color: #2c3e50 !important;
         }
+        .brand-logo {
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        /* Estilos para centrar el logo */
+        .navbar-brand-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .navbar-brand-container .navbar-brand {
+            margin: 0;
+        }
+        
+        /* Asegurar que los botones estén alineados */
+        .navbar-nav {
+            align-items: center;
+        }
+        
+        .navbar-nav .btn {
+            margin-bottom: 0;
+        }
+        
         .book-card {
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             height: 100%;
@@ -28,7 +57,16 @@
             color: white;
             font-size: 2rem;
             font-weight: bold;
+            border-radius: 10px 10px 0 0;
+            overflow: hidden;
         }
+        
+        .book-cover img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
         .genre-badge {
             background: linear-gradient(45deg, #f39c12, #e74c3c);
             color: white;
@@ -41,27 +79,148 @@
             padding: 2px 4px;
             border-radius: 3px;
         }
+        
+        .btn-custom {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            border-radius: 25px;
+            padding: 10px 25px;
+            color: white;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+            color: white;
+        }
+        
+        /* Estilos para el navbar en móvil */
+        @media (max-width: 768px) {
+            .navbar-brand-container {
+                order: 1;
+                width: 100%;
+                margin-bottom: 15px;
+            }
+            
+            .navbar-nav {
+                order: 2;
+                width: 100%;
+                flex-direction: column;
+            }
+            
+            .navbar-nav .btn {
+                width: 100%;
+                margin-bottom: 8px;
+                min-height: 40px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            
+            .navbar-nav .dropdown {
+                width: 100%;
+            }
+            
+            .navbar-nav .dropdown .btn {
+                width: 100%;
+            }
+            
+            .navbar-nav form {
+                width: 100%;
+                margin-bottom: 8px;
+            }
+            
+            .navbar-nav form .form-control {
+                flex: 1;
+            }
+            
+            .navbar-nav form .btn {
+                margin-bottom: 0;
+            }
+        }
+        
+        /* Estilos para el dropdown del usuario */
+        .dropdown-menu {
+            border: none;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+            border-radius: 10px;
+            margin-top: 8px;
+        }
+        .dropdown-item {
+            padding: 10px 20px;
+            transition: all 0.3s ease;
+        }
+        .dropdown-item:hover {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            transform: translateX(5px);
+        }
+        .dropdown-divider {
+            margin: 8px 0;
+            border-color: #e9ecef;
+        }
+        
+        /* Mejoras para las tarjetas de libros */
+        .card {
+            transition: all 0.3s ease;
+            border: none;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+        .btn-sm {
+            min-height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* Estilos para el formulario de búsqueda */
+        .navbar-nav form {
+            display: flex;
+            align-items: center;
+        }
+        
+        .navbar-nav form .form-control {
+            min-height: 38px;
+            border-radius: 6px;
+        }
+        
+        .navbar-nav form .btn {
+            min-height: 38px;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            width: auto;
+            min-width: 40px;
+        }
     </style>
 </head>
 <body>
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
         <div class="container">
-            <a class="navbar-brand" href="<?= base_url('libros') ?>">
-                <i class="fas fa-book-open me-2"></i>LibroNet
-            </a>
+            <!-- Logo centrado -->
+            <div class="navbar-brand-container text-center flex-grow-1">
+                <a class="navbar-brand brand-logo" href="<?= base_url('libros') ?>">
+                    <i class="fas fa-code me-2"></i>SanabriaCod
+                </a>
+            </div>
             
+            <!-- Botones del lado derecho -->
             <div class="navbar-nav ms-auto">
-                <form class="d-flex me-3" action="<?= base_url('libros/buscar') ?>" method="GET">
-                    <input class="form-control me-2" type="search" name="q" placeholder="Buscar libros..." 
-                           value="<?= $termino ?>" aria-label="Search">
-                    <button class="btn btn-outline-primary" type="submit">
-                        <i class="fas fa-search"></i>
-                    </button>
-                </form>
+                <a href="<?= base_url('dashboard') ?>" class="btn btn-outline-info me-2">
+                    <i class="fas fa-chart-line me-1"></i>Dashboard
+                </a>
+                <a href="<?= base_url('favoritos') ?>" class="btn btn-outline-warning me-2">
+                    <i class="fas fa-star me-1"></i>Mis Favoritos
+                </a>
                 
-                <div class="dropdown">
-                    <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown">
+                <div class="dropdown me-2">
+                    <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown">
                         <i class="fas fa-user me-1"></i><?= $usuario->nombre ?>
                     </button>
                     <ul class="dropdown-menu">
@@ -74,6 +233,15 @@
                         </a></li>
                     </ul>
                 </div>
+                
+                <!-- Formulario de búsqueda -->
+                <form class="d-flex" action="<?= base_url('libros/buscar') ?>" method="GET">
+                    <input class="form-control me-2" type="search" name="q" placeholder="Buscar libros..." 
+                           value="<?= $termino ?>" aria-label="Search">
+                    <button class="btn btn-outline-primary" type="submit">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </form>
             </div>
         </div>
     </nav>
@@ -90,7 +258,7 @@
                             <p class="text-muted">Buscando: "<strong><?= $termino ?></strong>"</p>
                         <?php endif; ?>
                     </div>
-                    <a href="<?= base_url('libros') ?>" class="btn btn-outline-secondary">
+                    <a href="<?= base_url('libros') ?>" class="btn btn-custom">
                         <i class="fas fa-arrow-left me-1"></i>Volver al Catálogo
                     </a>
                 </div>
@@ -131,7 +299,12 @@
                     <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
                         <div class="card book-card h-100">
                             <div class="book-cover">
-                                <i class="fas fa-book"></i>
+                                <?php if($libro->imagen && file_exists('./uploads/libros/' . $libro->imagen)): ?>
+                                    <img src="<?= base_url('uploads/libros/' . $libro->imagen) ?>" 
+                                         alt="<?= $libro->titulo ?>" class="img-fluid">
+                                <?php else: ?>
+                                    <i class="fas fa-book"></i>
+                                <?php endif; ?>
                             </div>
                             <div class="card-body d-flex flex-column">
                                 <h6 class="card-title">
@@ -166,13 +339,15 @@
                                         <a href="<?= base_url('libros/ver/' . $libro->id) ?>" class="btn btn-outline-primary btn-sm">
                                             <i class="fas fa-eye"></i>
                                         </a>
-                                        <a href="<?= base_url('libros/editar/' . $libro->id) ?>" class="btn btn-outline-warning btn-sm">
-                                            <i class="fas fa-edit"></i>
-                                        </a>
-                                        <a href="<?= base_url('libros/eliminar/' . $libro->id) ?>" class="btn btn-outline-danger btn-sm" 
-                                           onclick="return confirm('¿Estás seguro de que quieres eliminar este libro?')">
-                                            <i class="fas fa-trash"></i>
-                                        </a>
+                                        <?php if($libro->usuario_id == $usuario->id): ?>
+                                            <a href="<?= base_url('libros/editar/' . $libro->id) ?>" class="btn btn-outline-warning btn-sm">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                            <a href="<?= base_url('libros/eliminar/' . $libro->id) ?>" class="btn btn-outline-danger btn-sm" 
+                                               onclick="return confirm('¿Estás seguro de que quieres eliminar este libro?')">
+                                                <i class="fas fa-trash"></i>
+                                            </a>
+                                        <?php endif; ?>
                                     </div>
                                 </div>
                             </div>

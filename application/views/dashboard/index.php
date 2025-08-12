@@ -63,6 +63,58 @@
             background: #e9ecef;
             transform: translateX(5px);
         }
+        /* Estilos para el navbar en móvil */
+        @media (max-width: 768px) {
+            .navbar-nav .btn {
+                width: 100%;
+                margin-bottom: 8px;
+                min-height: 40px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            .navbar-nav .dropdown {
+                width: 100%;
+            }
+            .navbar-nav .dropdown .btn {
+                width: 100%;
+            }
+        }
+        /* Estilos para el dropdown del usuario */
+        .dropdown-menu {
+            border: none;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+            border-radius: 10px;
+            margin-top: 8px;
+        }
+        .dropdown-item {
+            padding: 10px 20px;
+            transition: all 0.3s ease;
+        }
+        .dropdown-item:hover {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            transform: translateX(5px);
+        }
+        .dropdown-divider {
+            margin: 8px 0;
+            border-color: #e9ecef;
+        }
+        
+        .btn-custom {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            border-radius: 25px;
+            padding: 10px 25px;
+            color: white;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+            color: white;
+        }
     </style>
 </head>
 <body class="bg-light">
@@ -78,7 +130,7 @@
                     <i class="fas fa-books me-1"></i>Catálogo
                 </a>
                 <div class="dropdown">
-                    <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown">
+                    <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown">
                         <i class="fas fa-user me-1"></i><?= $usuario->nombre ?>
                     </button>
                     <ul class="dropdown-menu">

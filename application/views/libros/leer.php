@@ -70,7 +70,7 @@
             </a>
             
             <div class="navbar-nav ms-auto">
-                <a href="<?= base_url('libros/ver/' . $libro->id) ?>" class="btn btn-outline-secondary me-2">
+                <a href="<?= base_url('libros/ver/' . $libro->id) ?>" class="btn btn-custom me-2">
                     <i class="fas fa-arrow-left me-1"></i>Volver al Libro
                 </a>
                 <div class="dropdown">

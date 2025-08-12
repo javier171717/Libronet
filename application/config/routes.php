@@ -2,54 +2,46 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 /*
-| -------------------------------------------------------------------------
-| URI ROUTING
-| -------------------------------------------------------------------------
-| This file lets you re-map URI requests to specific controller functions.
+|--------------------------------------------------------------------------
+| Sample REST API Routes
+|--------------------------------------------------------------------------
 |
-| Typically there is a one-to-one relationship between a URL string
-| and its corresponding controller class/method. The segments in a
-| URL normally follow this pattern:
+| There is a RESTful API system under the hood that is used by the
+| frontend to help with some functions. The main routes are:
 |
-|	example.com/class/method/id/
+|   $route['api/users']['GET'] = 'users';
+|   $route['api/users/(:num)']['GET'] = 'users/show/$1';
+|   $route['api/users']['POST'] = 'users/create';
+|   $route['api/users/(:num)']['PUT'] = 'users/update/$1';
+|   $route['api/users/(:num)']['DELETE'] = 'users/delete/$1';
 |
-| In some instances, however, you may want to remap this relationship
-| so that a different class/function is called than the one
-| corresponding to the URL.
+| You can also remove the default $route['default_controller'] = 'welcome' line
+| since its the default value anyway, and remove the welcome routes since
+| the welcome controller no longer exists.
 |
-| Please see the user guide for complete details:
+| If you have a custom default controller, you should change the following
+| line to point to it.
 |
-|	https://codeigniter.com/userguide3/general/routing.html
-|
-| -------------------------------------------------------------------------
-| RESERVED ROUTES
-| -------------------------------------------------------------------------
-|
-| There are three reserved routes:
-|
-|	$route['default_controller'] = 'welcome';
-|
-| This route indicates which controller class should be loaded if the
-| URI contains no data. In the above example, the "welcome" class
-| would be loaded.
-|
-|	$route['404_override'] = 'errors/page_missing';
-|
-| This route will tell the Router which controller/method to use if those
-| provided in the URL cannot be matched to a valid route.
-|
-|	$route['translate_uri_dashes'] = FALSE;
-|
-| This is not exactly a route, but allows you to automatically route
-| controller and method names that contain dashes. '-' isn't a valid
-| class or method name character, so it requires translation.
-| When you set this option to TRUE, it will replace ALL dashes in the
-| controller and method URI segments.
-|
-| Examples:	my-controller/index	-> my_controller/index
-|		my-controller/my-method	-> my_controller/my_method
 */
+
 $route['default_controller'] = 'welcome';
+
+// Rutas para el sistema de reseñas
+$route['resenas/agregar/(:num)'] = 'resenas/agregar/$1';
+$route['resenas/editar/(:num)'] = 'resenas/editar/$1';
+$route['resenas/eliminar/(:num)'] = 'resenas/eliminar/$1';
+$route['resenas/guardar'] = 'resenas/guardar';
+$route['resenas/actualizar'] = 'resenas/actualizar';
+$route['resenas/toggle_like'] = 'resenas/toggle_like';
+$route['resenas/buscar'] = 'resenas/buscar';
+$route['resenas/usuario'] = 'resenas/usuario';
+$route['resenas/populares'] = 'resenas/populares';
+$route['resenas/recientes'] = 'resenas/recientes';
+
+// Rutas para ver reseñas desde el controlador de libros
+$route['libros/resenas/(:num)'] = 'libros/resenas/$1';
+
+// Rutas existentes
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 

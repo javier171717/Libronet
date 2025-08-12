@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Usuario_model extends CI_Model {
+class Usuario_Model extends CI_Model {
 
     public function registrar($data) {
         return $this->db->insert('usuarios', $data);

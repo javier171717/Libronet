@@ -53,8 +53,8 @@
             </a>
             
             <div class="navbar-nav ms-auto">
-                <a href="<?= base_url('libros/ver/' . $libro->id) ?>" class="btn btn-outline-secondary me-2">
-                    <i class="fas fa-arrow-left me-1"></i>Volver al Libro
+                <a href="<?= base_url('libros') ?>" class="btn btn-custom me-2">
+                    <i class="fas fa-arrow-left me-1"></i>Volver al Catálogo
                 </a>
                 <div class="dropdown">
                     <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown">
@@ -195,7 +195,7 @@
                                 </div>
 
                                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                                    <a href="<?= base_url('libros/ver/' . $libro->id) ?>" class="btn btn-outline-secondary me-md-2">
+                                    <a href="<?= base_url('libros/ver/' . $libro->id) ?>" class="btn btn-custom me-md-2">
                                         <i class="fas fa-times me-1"></i>Cancelar
                                     </a>
                                     <button type="submit" class="btn btn-custom">

@@ -78,6 +78,46 @@
             background-clip: text;
         }
         
+        /* Estilos para centrar el logo */
+        .navbar-brand-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .navbar-brand-container .navbar-brand {
+            margin: 0;
+        }
+        
+        /* Asegurar que los botones estén alineados */
+        .navbar-nav {
+            align-items: center;
+        }
+        
+        .navbar-nav .btn {
+            margin-bottom: 0;
+        }
+        
+        /* Estilos para el formulario de búsqueda */
+        .navbar-nav form {
+            display: flex;
+            align-items: center;
+        }
+        
+        .navbar-nav form .form-control {
+            min-height: 38px;
+            border-radius: 6px;
+        }
+        
+        .navbar-nav form .btn {
+            min-height: 38px;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            width: auto;
+            min-width: 40px;
+        }
+        
         .social-links a {
             font-size: 1.5rem;
             transition: all 0.3s ease;
@@ -91,24 +131,85 @@
         footer {
             background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%) !important;
         }
+        /* Estilos para el navbar en móvil */
+        @media (max-width: 768px) {
+            .navbar-brand-container {
+                order: 1;
+                width: 100%;
+                margin-bottom: 15px;
+            }
+            
+            .navbar-nav {
+                order: 2;
+                width: 100%;
+                flex-direction: column;
+            }
+            
+            .navbar-nav .btn {
+                width: 100%;
+                margin-bottom: 8px;
+                min-height: 40px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            
+            .navbar-nav .dropdown {
+                width: 100%;
+            }
+            
+            .navbar-nav .dropdown .btn {
+                width: 100%;
+            }
+            
+            .navbar-nav form {
+                width: 100%;
+                margin-bottom: 8px;
+            }
+            
+            .navbar-nav form .form-control {
+                flex: 1;
+            }
+            
+            .navbar-nav form .btn {
+                margin-bottom: 0;
+            }
+        }
+        /* Estilos para el dropdown del usuario */
+        .dropdown-menu {
+            border: none;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+            border-radius: 10px;
+            margin-top: 8px;
+        }
+        .dropdown-item {
+            padding: 10px 20px;
+            transition: all 0.3s ease;
+        }
+        .dropdown-item:hover {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            transform: translateX(5px);
+        }
+        .dropdown-divider {
+            margin: 8px 0;
+            border-color: #e9ecef;
+        }
     </style>
 </head>
 <body>
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
         <div class="container">
-            <a class="navbar-brand brand-logo" href="<?= base_url('libros') ?>">
-                <i class="fas fa-code me-2"></i>SanabriaCod
-            </a>
+            <!-- Logo centrado -->
+            <div class="navbar-brand-container text-center flex-grow-1">
+                <a class="navbar-brand brand-logo" href="<?= base_url('libros') ?>">
+                    <i class="fas fa-code me-2"></i>SanabriaCod
+                </a>
+            </div>
             
+            <!-- Botones del lado derecho -->
             <div class="navbar-nav ms-auto">
-                <form class="d-flex me-3" action="<?= base_url('libros/buscar') ?>" method="GET">
-                    <input class="form-control me-2" type="search" name="q" placeholder="Buscar libros..." aria-label="Search">
-                    <button class="btn btn-outline-primary" type="submit">
-                        <i class="fas fa-search"></i>
-                    </button>
-                </form>
-                
                 <a href="<?= base_url('dashboard') ?>" class="btn btn-outline-info me-2">
                     <i class="fas fa-chart-line me-1"></i>Dashboard
                 </a>
@@ -116,8 +217,8 @@
                     <i class="fas fa-star me-1"></i>Mis Favoritos
                 </a>
                 
-                <div class="dropdown">
-                    <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown">
+                <div class="dropdown me-2">
+                    <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown">
                         <i class="fas fa-user me-1"></i><?= $usuario->nombre ?>
                     </button>
                     <ul class="dropdown-menu">
@@ -130,6 +231,14 @@
                         </a></li>
                     </ul>
                 </div>
+                
+                <!-- Formulario de búsqueda -->
+                <form class="d-flex" action="<?= base_url('libros/buscar') ?>" method="GET">
+                    <input class="form-control me-2" type="search" name="q" placeholder="Buscar libros..." aria-label="Search">
+                    <button class="btn btn-outline-primary" type="submit">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </form>
             </div>
         </div>
     </nav>

@@ -5,7 +5,7 @@ class Auth extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
-        $this->load->model('Usuario_model');
+        $this->load->model('Usuario_Model');
         $this->load->helper(['url', 'form']);
         $this->load->library('session');
     }
@@ -83,7 +83,7 @@ class Auth extends CI_Controller {
             'password' => password_hash($password, PASSWORD_DEFAULT)
         ];
 
-        if ($this->Usuario_model->registrar($data)) {
+        if ($this->Usuario_Model->registrar($data)) {
             // Los flashdata se limpian automáticamente después de ser mostrados
             $this->session->set_flashdata('mensaje', 'Registro exitoso. Ahora puedes iniciar sesión.');
             redirect('welcome');
@@ -101,7 +101,7 @@ class Auth extends CI_Controller {
         $email = $this->input->post('email');
         $password = $this->input->post('password');
 
-        $usuario = $this->Usuario_model->verificar_usuario($email, $password);
+        $usuario = $this->Usuario_Model->verificar_usuario($email, $password);
 
         if ($usuario) {
             $this->session->set_userdata('usuario', $usuario);
@@ -152,7 +152,7 @@ class Auth extends CI_Controller {
         }
 
         // Verificar credenciales en la base de datos
-        $usuario = $this->Usuario_model->verificar_usuario($email, $password);
+        $usuario = $this->Usuario_Model->verificar_usuario($email, $password);
 
         if ($usuario) {
             $response['valid'] = true;

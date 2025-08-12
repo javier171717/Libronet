@@ -5,7 +5,7 @@ class Libros extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
-        $this->load->model(['Libro_Model', 'Usuario_Model', 'Favorito_Model']);
+        $this->load->model(['Libro_Model', 'Usuario_Model', 'Favorito_Model', 'Resena_model']);
         $this->load->helper(['url', 'form']);
         $this->load->library(['session', 'form_validation']);
         
@@ -90,6 +90,21 @@ class Libros extends CI_Controller {
         
         // Datos de favoritos para el usuario actual
         $data['mis_favoritos_ids'] = $this->Favorito_Model->obtener_ids_libros_favoritos($data['usuario']->id);
+        
+        // Datos de reseñas para el libro
+        $data['resenas'] = $this->Resena_model->get_resenas_libro($id, 5); // Solo las 5 más recientes
+        $data['estadisticas'] = $this->Resena_model->get_estadisticas_libro($id);
+        
+        // Verificar si el usuario ya tiene una reseña para este libro
+        $data['resena_usuario'] = $this->Resena_model->get_resena_usuario($id, $data['usuario']->id);
+        
+        // Obtener likes para cada reseña
+        $data['likes_resena'] = [];
+        $data['usuario_dio_like'] = [];
+        foreach ($data['resenas'] as $resena) {
+            $data['likes_resena'][$resena->id] = $this->Resena_model->get_likes_resena($resena->id);
+            $data['usuario_dio_like'][$resena->id] = $this->Resena_model->usuario_dio_like($resena->id, $data['usuario']->id);
+        }
         
         $this->load->view('libros/detalle', $data);
     }
@@ -233,5 +248,40 @@ class Libros extends CI_Controller {
         }
         
         $this->load->view('libros/leer', $data);
+    }
+
+    /**
+     * Ver todas las reseñas de un libro
+     */
+    public function resenas($libro_id) {
+        // Debug: Verificar datos de sesión
+        error_log('Usuario en sesión: ' . print_r($this->session->userdata(), true));
+        
+        $data['libro'] = $this->Libro_Model->obtener_libro($libro_id);
+        $data['usuario'] = $this->session->userdata('usuario');
+        
+        if (!$data['libro']) {
+            show_404();
+        }
+        
+        // Verificar que el usuario esté logueado
+        if (!$data['usuario']) {
+            redirect('auth/login');
+            return;
+        }
+        
+        // Obtener todas las reseñas del libro
+        $data['resenas'] = $this->Resena_model->get_resenas_libro($libro_id, 50); // Hasta 50 reseñas
+        $data['estadisticas'] = $this->Resena_model->get_estadisticas_libro($libro_id);
+        
+        // Obtener likes para cada reseña
+        $data['likes_resena'] = [];
+        $data['usuario_dio_like'] = [];
+        foreach ($data['resenas'] as $resena) {
+            $data['likes_resena'][$resena->id] = $this->Resena_model->get_likes_resena($resena->id);
+            $data['usuario_dio_like'][$resena->id] = $this->Resena_model->usuario_dio_like($resena->id, $data['usuario']->id);
+        }
+        
+        $this->load->view('resenas/lista', $data);
     }
 } 

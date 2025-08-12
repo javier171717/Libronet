@@ -55,6 +55,21 @@
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             border-color: transparent;
         }
+        
+        .btn-custom {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            border-radius: 25px;
+            padding: 10px 25px;
+            color: white;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+            color: white;
+        }
     </style>
 </head>
 <body>
@@ -246,7 +261,7 @@
 
         <!-- Back to Catalog -->
         <div class="text-center mt-5">
-            <a href="<?= base_url('libros') ?>" class="btn btn-outline-secondary">
+            <a href="<?= base_url('libros') ?>" class="btn btn-custom me-2">
                 <i class="fas fa-arrow-left me-2"></i>Volver al Catálogo Completo
             </a>
         </div>
