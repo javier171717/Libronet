@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SanabriaCod - Biblioteca Virtual</title>
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23667eea'><path d='M21,4H3A2,2 0 0,0 1,6V19A2,2 0 0,0 3,21H21A2,2 0 0,0 23,19V6A2,2 0 0,0 21,4M3,19V6H8V19H3M10,19V6H21V19H10Z'/></svg>">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
@@ -213,6 +214,9 @@
                 <a href="<?= base_url('dashboard') ?>" class="btn btn-outline-info me-2">
                     <i class="fas fa-chart-line me-1"></i>Dashboard
                 </a>
+                <a href="<?= base_url('libros/manual_usuario') ?>" class="btn btn-outline-success me-2">
+                    <i class="fas fa-book-open me-1"></i>Manual de Usuario
+                </a>
                 <a href="<?= base_url('favoritos') ?>" class="btn btn-outline-warning me-2">
                     <i class="fas fa-star me-1"></i>Mis Favoritos
                 </a>
@@ -390,9 +394,9 @@
                     <h6 class="mb-3">Desarrollado por</h6>
                     <p class="text-muted mb-2">SanabriaCod</p>
                     <div class="social-links">
-                        <a href="https://github.com/javier171717" class="text-white me-3"><i class="fab fa-github"></i></a>
-                        <a href="https://www.linkedin.com/in/javier-jimenez-a184a816b" class="text-white me-3"><i class="fab fa-linkedin"></i></a>
-                        <a href="https://wa.me/573215821483?text=Hola,%20me%20interesa%20tu%20biblioteca%20virtual" class="text-white"><i class="fab fa-whatsapp"></i></a>
+                        <a href="https://github.com/javier171717" class="text-white me-3" target="_blank"><i class="fab fa-github"></i></a>
+                        <a href="https://www.linkedin.com/in/javier-jimenez-a184a816b" class="text-white me-3" target="_blank"><i class="fab fa-linkedin"></i></a>
+                        <a href="https://wa.me/573215821483?text=Hola,%20me%20interesa%20tu%20trabajo%20como%20desarrollador" class="text-white" target="_blank"><i class="fab fa-whatsapp"></i></a>
                     </div>
                 </div>
             </div>

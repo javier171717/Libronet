@@ -284,4 +284,12 @@ class Libros extends CI_Controller {
         
         $this->load->view('resenas/lista', $data);
     }
+
+    /**
+     * Mostrar manual de usuario
+     */
+    public function manual_usuario() {
+        $data['usuario'] = $this->session->userdata('usuario');
+        $this->load->view('libros/manual_usuario', $data);
+    }
 } 
